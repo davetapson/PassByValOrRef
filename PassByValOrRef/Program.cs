@@ -4,7 +4,7 @@ namespace PassByValOrRef
 {
     class Program
     {
-        static void Main(string[] args)
+        static void Main()
         {
             // ah, bloody C#.  Ok, it's not that simple any more.
 
