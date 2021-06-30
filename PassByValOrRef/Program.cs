@@ -26,7 +26,10 @@ namespace PassByValOrRef
 
 
 
-            // with reference types, i.e. anything more complicated than a value type (e.g. int) gets passed by reference anyway
+            // with reference types, i.e. anything more complicated than a value type, the reference to the object is passed in, but:
+            // by ref: any changes made to the object in the method affect the original variable in the calling method
+            // by val: you can change properties of the original variable (e.g. name) but you cannot reassign the parameter to a different
+            //         memory location e.g. if you create a new book, you cannot reassign the parameter to that new book's memory location.  
             var refBookName1 = "I'm a new book, but with the same address as the original book. The original book is dead.  Long live the book.";
             var refBookName2 = "I'm the same book, I just had my name changed.";
             var valBookName = "I'm the same book, I just had my name changeed. Again.";
@@ -41,7 +44,7 @@ namespace PassByValOrRef
             // exercise 1
             var bookHashCodeBefore = book.GetHashCode();
 
-            PassByRef1(ref book, refBookName1);
+            PassByRef1(ref book, refBookName1);  // create new book in method
 
             var bookHashCodeAfter = book.GetHashCode();
 
@@ -49,11 +52,10 @@ namespace PassByValOrRef
             Assert.AreNotEqual(bookHashCodeBefore, bookHashCodeAfter);  // object hash codes are different - different books.
 
             
-            // exercise 2
-            
+            // exercise 2            
             bookHashCodeBefore = book.GetHashCode();
 
-            PassByRef2(ref book, refBookName2);
+            PassByRef2(ref book, refBookName2);     // update book in method
 
             bookHashCodeAfter = book.GetHashCode();
 
@@ -64,7 +66,7 @@ namespace PassByValOrRef
             // exercise 3
             bookHashCodeBefore = book.GetHashCode();
 
-            PassByVal(book, valBookName);
+            PassByVal(book, valBookName);   
 
             bookHashCodeAfter = book.GetHashCode();
 
@@ -129,11 +131,12 @@ namespace PassByValOrRef
         private static void PassByVal(Book book, string valBookName)
         {
             book.Name = valBookName;  // Reference type objects have their ref passed in even when passing by val, so the orig book will have it's name changed.
+            book = new Book("huh");   // Cannot reassign book param to new memory location.  This just doesn't work.
         }
 
         private static void PassByRef2(ref Book book, string name)
         {
-            book.Name = name;
+            book.Name = name; 
         }
 
         private static void PassByRef1(ref Book book, string name)
