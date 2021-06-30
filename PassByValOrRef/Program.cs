@@ -18,7 +18,7 @@ namespace PassByValOrRef
 
             PassByRef2(ref i, 3);    // I'm passing by ref, eg memory address. I create a new int at the memory address that I passed in.
 
-            Assert.AreEqual(3, i);  // see, I'm updated
+            Assert.AreEqual(3, i);  // see, I'm changed
 
             PassByVal(i, 3);        // I'm passing a copy of i in, at a diffent memory address
 
